@@ -46,11 +46,11 @@ class CPT_Filter_Widget extends WP_Widget {
         
         print_r($taxonomies);
         ?>
-        	<?php echo $before_widget; ?>
-        	<?php if ( $title )
-            	echo $before_title . $title . $after_title; ?>
+			<?php echo $before_widget; ?>
+			<?php if ( $title )
+				echo $before_title . $title . $after_title; ?>
             
-            <form method="post" action="">
+			<form method="post" action="">
             
             <?php foreach( $taxonomies as $tax_name => $tax_array ) : ?>
             	<label for="<?php echo $tax_name ?>">
@@ -65,7 +65,7 @@ class CPT_Filter_Widget extends WP_Widget {
             	</label>
             <?php endforeach ?>
             
-            <div id="cptf-submit">
+			<div id="cptf-submit">
 				<input type="submit" value="<?php _e( 'Submit', 'cptf' ) ?>" name="cptf_submit" />
 			</div>
 			
