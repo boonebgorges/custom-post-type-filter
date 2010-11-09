@@ -40,7 +40,7 @@ class CPT_Filter {
 		return apply_filters( 'cptf_available_post_types', $types );
 	}
 	
-	function get_taxonomies_for_post_types( $post_types ) {
+	function get_taxonomies_for_post_types( $post_types, $get_terms = true ) {
 
 		$excluded_taxonomies = apply_filters( 'cptf_excluded_taxonomies', array(
 			'nav_menu',
@@ -56,13 +56,12 @@ class CPT_Filter {
 				if ( !in_array( $p_tax, $excluded_taxonomies ) && !isset( $taxonomies[$p_tax] ) ) {
 					$tax_label = isset( $tax_object->labels->name ) ? $tax_object->labels->name : $p_tax;
 					
-					// Get the taxonomy terms
-					$tax_terms = get_terms( $p_tax );
-					
-					$taxonomies[$p_tax] = array( 
+					$taxonomies[$p_tax] = array(
 						'label' => apply_filters( 'cptf_tax_label', $tax_label, $p_tax ),
-						'terms' => apply_filters( 'cptf_tax_terms', $tax_terms, $p_tax ) 
 					);
+					
+					if ( $get_terms )
+						$taxonomies[$p_tax]['terms'] = CPT_Filter::get_terms_for_taxonomy( $p_tax );
 					
 					}
 			}
@@ -70,6 +69,12 @@ class CPT_Filter {
 		
 		
 		return apply_filters( 'cptf_available_taxonomies', $taxonomies );
+	}
+	
+	function get_terms_for_taxonomy( $taxonomy ) {
+		$tax_terms = get_terms( $taxonomy );
+		
+		return apply_filters( 'cptf_tax_terms', $tax_terms, $taxonomy );
 	}
 }
 
